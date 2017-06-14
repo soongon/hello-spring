@@ -2,6 +2,8 @@ package kr.re.kitri.hello.controller;
 
 import kr.re.kitri.hello.common.MockArticle;
 import kr.re.kitri.hello.model.Article;
+import kr.re.kitri.hello.service.BbsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,9 @@ import java.util.List;
  */
 @Controller
 public class BbsController {
+
+    @Autowired
+    private BbsService service;
 
     /**\
      * 전체보기
@@ -57,6 +62,8 @@ public class BbsController {
     public ModelAndView doWrite(Article article) {
 
         System.out.println(article);
+
+        service.registArticle(article);
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("bbs/do_write");

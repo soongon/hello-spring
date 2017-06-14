@@ -2,22 +2,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <mvc:annotation-driven/>
-    <mvc:resources mapping="/asset/**" location="/client/"/>
+    <mvc:resources mapping="/client/**" location="/client/"/>
+
+    <context:component-scan base-package="kr.re.kitri.hello"/>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
-    <bean id="mainController"
-          class="kr.re.kitri.hello.controller.MainController"/>
-    <bean id="bbsController"
-          class="kr.re.kitri.hello.controller.BbsController" />
-    <bean id="amigoController"
-          class="kr.re.kitri.hello.controller.AmigoController" />
-
 </beans>
