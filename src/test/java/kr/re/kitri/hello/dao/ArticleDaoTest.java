@@ -10,29 +10,28 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * Created by danawacomputer on 2017-06-14.
  */
-public class TestArticleDao {
+public class ArticleDaoTest {
 
     private ApplicationContext context;
 
     @Before
-    public void init() {
+    public void setup() {
         context = new ClassPathXmlApplicationContext(
                         "classpath:spring/db.xml"
                         , "classpath:spring/applicationContext.xml");
     }
 
-    @Test
-    public void testGetSum() {
-        ArticleDao dao = context.getBean("articleDao", ArticleDao.class);
-        int result = dao.getSum(3, 5);
-
-        Assert.assertEquals(8, result);
-    }
 
     @Test
     public void testInsertArticle() {
         ArticleDao dao = context.getBean("articleDao", ArticleDao.class);
-        dao.insertArticle(new Article());
 
+        Article article = new Article();
+        article.setArticleId("3");
+        article.setTitle("테스트케이스");
+        article.setAuthor("tc");
+        article.setContent("테스트케이스 입니다.");
+
+        dao.insertArticle(article);
     }
 }

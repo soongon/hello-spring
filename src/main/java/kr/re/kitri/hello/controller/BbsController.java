@@ -5,25 +5,24 @@ import kr.re.kitri.hello.model.Article;
 import kr.re.kitri.hello.service.BbsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
  *  /bbs ..전체보기
- *  /bbs/15 .. 상세보기(15번 글)
- *  /bbs/15/modify .. 수정(15번 글 수정)
- *  /bbs/15/remove .. 삭제(15번 글 삭제)
+ *  /bbs/{articleId} .. 상세보기(15번 글)
+ *  /bbs/{articleId}/modify .. 수정(15번 글 수정)
+ *  /bbs/{articleId}/remove .. 삭제(15번 글 삭제)
  *
  *  /bbs/write .. 글 작성화면 로딩
  *  /bbs/write/do .. 글 작성하기
  *
  */
 @Controller
+@RequestMapping("/bbs")
 public class BbsController {
 
     @Autowired
@@ -33,7 +32,7 @@ public class BbsController {
      * 전체보기
      * @return
      */
-    @RequestMapping("/bbs")
+    @RequestMapping("")
     public ModelAndView viewAll() {
 
         //전체보기를 하기위한 데이터를 가져온다.
@@ -44,7 +43,7 @@ public class BbsController {
                 .addObject("list", list);
     }
 
-    @RequestMapping("/bbs/{articleId}")
+    @RequestMapping("/{articleId}")
     public ModelAndView viewDetail(@PathVariable String articleId) {
 
         ModelAndView mav = new ModelAndView();
@@ -53,12 +52,12 @@ public class BbsController {
         return mav;
     }
 
-    @RequestMapping(value = "/bbs/write", method = RequestMethod.GET)
+    @GetMapping("/write")
     public String write() {
         return "bbs/write";
     }
 
-    @RequestMapping(value = "/bbs/write", method = RequestMethod.POST)
+    @PostMapping("/write")
     public ModelAndView doWrite(Article article) {
 
         System.out.println(article);
@@ -72,7 +71,7 @@ public class BbsController {
         return mav;
     }
 
-    /*@RequestMapping("/bbs/write/do")
+    /*@RequestMapping("/write/do")
     public String doWrite(HttpServletRequest request) {
 
         String articleId = request.getParameter("article_id");
