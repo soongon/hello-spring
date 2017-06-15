@@ -13,9 +13,9 @@
 <body>
 <h1>등록 완료!</h1>
 <ul>
-    <li>${amigoName}</li>
-    <li>${hpNum}</li>
-    <li>${email}</li>
+    <li>${amigo.name}</li>
+    <li>${amigo.hpNum}</li>
+    <li>${amigo.email}</li>
 </ul>
 </body>
 </html>
