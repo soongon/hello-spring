@@ -28,35 +28,44 @@ public class BbsController {
     @Autowired
     private BbsService service;
 
-    /**\
+    /**
      * 전체보기
-     * @return
      */
     @RequestMapping("")
     public ModelAndView viewAll() {
 
         //전체보기를 하기위한 데이터를 가져온다.
-        MockArticle mock = new MockArticle();
-        List<Article> list = mock.getArticles();
+        List<Article> list = service.getArticles();
 
         return new ModelAndView("bbs/view_all")
                 .addObject("list", list);
     }
 
+    /**
+     * 글 상세보기
+     * @param articleId
+     */
     @RequestMapping("/{articleId}")
     public ModelAndView viewDetail(@PathVariable String articleId) {
 
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("bbs/view_detail");
-        mav.addObject("articleId", articleId);
-        return mav;
+        Article article = service.viewArticle(articleId);
+
+        return new ModelAndView("bbs/view_detail")
+                .addObject("article", article);
     }
 
+    /**
+     * 글쓰기 화면 보기
+     */
     @GetMapping("/write")
     public String write() {
         return "bbs/write";
     }
 
+    /**
+     * 실제 글쓰기
+     * @param article
+     */
     @PostMapping("/write")
     public ModelAndView doWrite(Article article) {
 

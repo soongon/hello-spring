@@ -19,9 +19,10 @@
 <c:forEach var="article" items="${list}">
     <ul>
         <li>글번호 : ${article.articleId}</li>
-        <li>제목 : <a href="/bbs/${article.articleId}">${article.title}</a></li>
-        <li>작성자 : ${article.author}</li>
-        <li>내용 : ${article.content}</li>
+        <li>제목 :
+            <a href="/bbs/${article.articleId}">${article.title}</a>
+            (${article.author})
+        </li>
     </ul>
 </c:forEach>
 
