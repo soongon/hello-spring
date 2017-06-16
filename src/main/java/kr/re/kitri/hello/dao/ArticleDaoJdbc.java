@@ -22,6 +22,7 @@ public class ArticleDaoJdbc implements ArticleDao {
      * 글 입력
      * @param article
      */
+    @Override
     public void insertArticle(Article article) {
 
         try {
@@ -51,6 +52,7 @@ public class ArticleDaoJdbc implements ArticleDao {
      * 글 전체보기
      * @return 전체 글 리스트
      */
+    @Override
     public List<Article> selectAllArticles() {
 
         String query =
@@ -85,6 +87,7 @@ public class ArticleDaoJdbc implements ArticleDao {
      * 글 상세보기
      * @param articleId 글번호
      */
+    @Override
     public Article selectArticleById(String articleId) {
         String query =
                 "SELECT article_id, title, author, content\n" +
