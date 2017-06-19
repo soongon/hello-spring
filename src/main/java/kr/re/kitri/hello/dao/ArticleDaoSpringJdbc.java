@@ -6,8 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -15,6 +13,16 @@ public class ArticleDaoSpringJdbc implements ArticleDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    private RowMapper<Article> articleMapper =
+            (rs, i) -> {
+                Article article = new Article();
+                article.setArticleId(rs.getString(1));
+                article.setTitle(rs.getString(2));
+                article.setAuthor(rs.getString(3));
+                article.setContent(rs.getString(4));
+                return article;
+            };
 
     @Override
     public void insertArticle(Article article) {
@@ -37,15 +45,8 @@ public class ArticleDaoSpringJdbc implements ArticleDao {
                         "FROM article\n" +
                         "WHERE article_id = ?";
 
-        return jdbcTemplate.queryForObject(query,
-                (rs, i) -> {
-                    Article article = new Article();
-                    article.setArticleId(rs.getString(1));
-                    article.setTitle(rs.getString(2));
-                    article.setAuthor(rs.getString(3));
-                    article.setContent(rs.getString(4));
-                    return article;
-                }, Integer.parseInt(articleId));
+        return jdbcTemplate.queryForObject(
+                query, articleMapper, Integer.parseInt(articleId));
     }
 
     @Override
@@ -54,17 +55,7 @@ public class ArticleDaoSpringJdbc implements ArticleDao {
                 "SELECT article_id, title, author, content\n" +
                         "FROM article";
 
-        return jdbcTemplate.query(query, new RowMapper<Article>() {
-            @Override
-            public Article mapRow(ResultSet rs, int i) throws SQLException {
-                Article article = new Article();
-                article.setArticleId(rs.getString(1));
-                article.setTitle(rs.getString(2));
-                article.setAuthor(rs.getString(3));
-                article.setContent(rs.getString(4));
-                return article;
-            }
-        });
+        return jdbcTemplate.query(query, articleMapper);
     }
 }
 
